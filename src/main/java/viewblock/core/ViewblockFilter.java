@@ -1,0 +1,114 @@
+package viewblock.core;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.Reader;
+import java.io.StringReader;
+import java.util.Properties;
+
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
+import javax.servlet.FilterConfig;
+import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import viewblock.exception.ViewBlockSpringBeanNotFindException;
+import viewblock.resolve.FreemarkerViewResolve;
+import viewblock.resolve.JspViewResolve;
+
+public class ViewblockFilter implements Filter{
+
+	private static final Logger logger = LoggerFactory.getLogger(ViewblockFilter.class);
+	
+	public void destroy() {
+		// TODO Auto-generated method stub
+	}
+	
+
+	public void doFilter(ServletRequest request, ServletResponse response,
+			FilterChain filterChain) throws IOException, ServletException {
+		filterChain.doFilter(request, response);
+	}
+
+	public void init(FilterConfig config) throws ServletException {
+		//Load base config
+		Properties properties = loadViewblockConfig(config);
+		ViewblockConfig.margerProperties(properties);
+		
+		
+		if(ViewblockConfig.jsp_template!=null){
+			JspViewResolve.initial(ViewblockConfig.jsp_template);
+		}
+
+		if(ViewblockConfig.freemarker){
+			
+			FreemarkerViewResolve.initial(
+					config.getServletContext(),
+					ViewblockConfig.freemarker_template,
+					ViewblockConfig.freemarker_delay,
+					ViewblockConfig.freemarker_encode);
+		}
+		
+		if(ViewblockConfig.spring){
+			ViewblockFactory.setUseSpring(true);
+			SpringProxy.initial(config.getServletContext());
+		}
+		
+		if(ViewblockConfig.pack_scan != null){
+			try {
+				ViewblockFactory.scanBlock(ViewblockConfig.pack_scan);
+			} catch (ViewBlockSpringBeanNotFindException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}else{
+			logger.error("not set block view pack");
+		}
+	}
+	
+	/**
+	 * Load config
+	 * @param config
+	 * @return
+	 */
+	private Properties loadViewblockConfig(FilterConfig config){
+		Properties properties = new Properties();
+		try {
+			InputStream baseConfigInputStream = this.getClass().getClassLoader().getResourceAsStream("viewblock_default.properties");
+			properties.load(baseConfigInputStream);
+			baseConfigInputStream.close();
+			String config_properties = config.getInitParameter("config_properties");
+			if(config_properties!=null){
+				logger.debug("Load viewblock config_properties:{}",config_properties);
+				Reader reader = new StringReader(config_properties);
+				properties.load(reader);
+				reader.close();
+			}else {
+				String propsfilePath = new File(Thread.currentThread().getContextClassLoader().getResource("/").getFile()).getParent()+"/viewblock.properties";
+				File file = new File(propsfilePath);
+				if(file.exists()){
+					logger.info("Load viewblock.properties on location:{}",propsfilePath);
+					InputStream inputStream = new FileInputStream(file);
+					properties.load(this.getClass().getClassLoader().getResourceAsStream("viewblock.properties"));
+					inputStream.close();
+				}
+			}
+		} catch (FileNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		return properties;
+	}
+	
+
+}
