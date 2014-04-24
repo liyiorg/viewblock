@@ -43,24 +43,24 @@ public class ExampleBlock {
 }
 
 2. web.xml ≈‰÷√  
-&lt;filter&gt;  
-	&lt;filter-name&gt;viewblock&lt;/filter-name&gt;  
-	&lt;filter-class&gt;viewblock.core.ViewblockFilter&lt;/filter-class&gt;  
-	&lt;async-supported&gt;true&lt;/async-supported&gt;  
+&lt;filter&gt;   
+	&lt;filter-name&gt;viewblock&lt;/filter-name&gt;   
+	&lt;filter-class&gt;viewblock.core.ViewblockFilter&lt;/filter-class&gt;   
+	&lt;async-supported&gt;true&lt;/async-supported&gt;   
 	
-	&lt;init-param&gt;  
-		&lt;param-name&gt;config_properties&lt;/param-name&gt;  
-		&lt;param-value&gt;  			
-		pack_scan=example.*  
-		spring=false  
-		jsp_template=/WEB-INF/block  
-		freemarker=true  
-		freemarker_template=/WEB-INF/block  
-		freemarker_delay=0  
-		freemarker_encode=UTF-8  
-		&lt;/param-value&gt;  
-	&lt;/init-param&gt;  
-&lt;/filter&gt;
+	&lt;init-param&gt;   
+		&lt;param-name&gt;config_properties&lt;/param-name&gt;   
+		&lt;param-value&gt;  	  		
+		pack_scan=example.*    
+		spring=false    
+		jsp_template=/WEB-INF/block    
+		freemarker=true    
+		freemarker_template=/WEB-INF/block    
+		freemarker_delay=0    
+		freemarker_encode=UTF-8    
+		&lt;/param-value&gt;    
+	&lt;/init-param&gt;    
+&lt;/filter&gt;  
 
 3. JSP ±Í«©…Í√˜  
 &lt;%@taglib uri="/viewblock" prefix="viewblock"%&gt;  
