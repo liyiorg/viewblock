@@ -23,7 +23,7 @@ viewblock 适用于大页面,单一请求多逻辑处理,页面代码块重复使用,异步页面加载的项目,
 ---------
 1. 创建 viewblock  
 
-@ViewblockCollection
+@ViewblockCollection   
 public class ExampleBlock {
 
 	@Viewblock(name = "header", template = "header.jsp")
