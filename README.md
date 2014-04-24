@@ -1,8 +1,7 @@
 viewblock
 ---------
 
-viewblock 是一个JSP块加载工具,传统的WEB请求方式,由客户端发送请求,服务端接收并处理请求转到一个页面.viewblock 可以将一个页面划分为不同的逻辑块处理,
-以处理不同的业务.   
+viewblock 是一个JSP块加载工具,用于处理复杂的业务请求与页面块加载.
 
 示例  
 https://github.com/liyiorg/viewblock-example
@@ -12,7 +11,7 @@ https://github.com/liyiorg/viewblock-example
 注解编写  
 支持请求参数,类型转换  
 支持JSP,Freemark 块模板  
-支持异步加载块(条件servlet3.0,目前只支持apache-tomcat-7.0.50 以上版本)  
+支持异步加载块(servlet3.0,目前只支持apache-tomcat-7.0.50 以上版本)  
 支持spring IOC
 
 使用场景
