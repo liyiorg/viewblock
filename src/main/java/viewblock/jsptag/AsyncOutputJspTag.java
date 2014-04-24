@@ -40,14 +40,14 @@ public class AsyncOutputJspTag extends TagSupport{
 						pageContext.getOut().print(content);
 						break;
 					} catch (IOException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					}
 				}else{
 					try {
 						Thread.sleep(100);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
+						
 						e.printStackTrace();
 					}
 				}

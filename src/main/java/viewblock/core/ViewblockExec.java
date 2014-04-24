@@ -179,7 +179,7 @@ public class ViewblockExec {
 			try {  
 				throw new ViewBlockException("View block ["+name+"] not exists!");
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}

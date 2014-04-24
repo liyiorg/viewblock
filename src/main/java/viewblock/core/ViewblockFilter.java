@@ -65,7 +65,7 @@ public class ViewblockFilter implements Filter{
 			try {
 				ViewblockFactory.scanBlock(ViewblockConfig.pack_scan);
 			} catch (ViewBlockSpringBeanNotFindException e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
 		}else{
@@ -101,10 +101,10 @@ public class ViewblockFilter implements Filter{
 				}
 			}
 		} catch (FileNotFoundException e1) {
-			// TODO Auto-generated catch block
+			
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			// TODO Auto-generated catch block
+			
 			e1.printStackTrace();
 		}
 		return properties;

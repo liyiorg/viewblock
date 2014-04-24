@@ -88,10 +88,10 @@ public class ViewblockFactory {
 				try {
 					object = c.newInstance();
 				} catch (InstantiationException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				} catch (IllegalAccessException e) {
-					// TODO Auto-generated catch block
+					
 					e.printStackTrace();
 				}
 			}
@@ -112,7 +112,7 @@ public class ViewblockFactory {
 						try {
 							throw new ViewBlockException("View block ["+bname+"] existed,can't set same name");
 						} catch (ViewBlockException e) {
-							// TODO Auto-generated catch block
+							
 							e.printStackTrace();
 						}
 					}else{
