@@ -1,5 +1,5 @@
 viewblock
-=========
+---------
 
 viewblock ÊÇÒ»¸öJSP¿é¼ÓÔØ¹¤¾ß,´«Í³µÄWEBÇëÇó·½Ê½,ÓÉ¿Í»§¶Ë·¢ËÍÇëÇó,·şÎñ¶Ë½ÓÊÕ²¢´¦ÀíÇëÇó×ªµ½Ò»¸öÒ³Ãæ.viewblock ¿ÉÒÔ½«Ò»¸öÒ³Ãæ»®·ÖÎª²»Í¬µÄÂß¼­¿é´¦Àí,
 ÒÔ´¦Àí²»Í¬µÄÒµÎñ.   
@@ -8,7 +8,7 @@ viewblock ÊÇÒ»¸öJSP¿é¼ÓÔØ¹¤¾ß,´«Í³µÄWEBÇëÇó·½Ê½,ÓÉ¿Í»§¶Ë·¢ËÍÇëÇó,·şÎñ¶Ë½ÓÊÕ²¢´¦À
 https://github.com/liyiorg/viewblock-example
 
 ÌØµã
-=========
+---------
 ×¢½â±àĞ´  
 Ö§³ÖÇëÇó²ÎÊı,ÀàĞÍ×ª»»  
 Ö§³ÖJSP,Freemark ¿éÄ£°å  
@@ -16,11 +16,11 @@ https://github.com/liyiorg/viewblock-example
 Ö§³Öspring IOC
 
 Ê¹ÓÃ³¡¾°
-=========
+---------
 viewblock ÊÊÓÃÓÚ´óÒ³Ãæ,µ¥Ò»ÇëÇó¶àÂß¼­´¦Àí,Ò³Ãæ´úÂë¿éÖØ¸´Ê¹ÓÃ,Òì²½Ò³Ãæ¼ÓÔØµÄÏîÄ¿,¿ÉÒÔ½áºÏMVC¼Ü¹¹Ò»ÆğÊ¹ÓÃ,ÈçSpring MVC,struts
 
 Ê¹ÓÃ·½Ê½:
-=========
+---------
 1. ´´½¨ viewblock  
 
 @ViewblockCollection
@@ -43,14 +43,14 @@ public class ExampleBlock {
 }
 
 2. web.xml ÅäÖÃ  
-<filter>
-	<filter-name>viewblock</filter-name>
-	<filter-class>viewblock.core.ViewblockFilter</filter-class>
-	<async-supported>true</async-supported>
+&lt;filter&gt;
+	&lt;filter-name&gt;viewblock&lt;/filter-name&gt;
+	&lt;filter-class&gt;viewblock.core.ViewblockFilter&lt;/filter-class&gt;
+	&lt;async-supported&gt;true&lt;/async-supported&gt;
 	
-	<init-param>
-		<param-name>config_properties</param-name>
-		<param-value>			
+	&lt;init-param&gt;
+		&lt;param-name&gt;config_properties&lt;/param-name&gt;
+		&lt;param-value&gt;			
 		pack_scan=example.*
 		spring=false
 		jsp_template=/WEB-INF/block
@@ -58,15 +58,15 @@ public class ExampleBlock {
 		freemarker_template=/WEB-INF/block
 		freemarker_delay=0
 		freemarker_encode=UTF-8
-		</param-value>
-	</init-param>
-</filter>
+		&lt;/param-value&gt;
+	&lt;/init-param&gt;
+&lt;/filter&gt;
 
 3. JSP ±êÇ©ÉêÃ÷  
-<%@taglib uri="/viewblock" prefix="viewblock"%>  
+&lt;%@taglib uri="/viewblock" prefix="viewblock"%&gt;  
 
 4. ÒıÈë¿é  
-<viewblock:block name="header"/>  
-<viewblock:block name="content"/>   
-<viewblock:block name="footer"/>  
+&lt;viewblock:block name="header"/&gt;  
+&lt;viewblock:block name="content"/&gt;   
+&lt;viewblock:block name="footer"/&gt;  
 
