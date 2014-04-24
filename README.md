@@ -1,4 +1,72 @@
 viewblock
 =========
 
-jsp viewblock
+viewblock 是一个JSP块加载工具,传统的WEB请求方式,由客户端发送请求,服务端接收并处理请求转到一个页面.viewblock 可以将一个页面划分为不同的逻辑块处理,
+以处理不同的业务.   
+
+示例  
+https://github.com/liyiorg/viewblock-example
+
+特点
+=========
+注解编写  
+支持请求参数,类型转换  
+支持JSP,Freemark 块模板  
+支持异步加载块(条件servlet3.0,目前只支持apache-tomcat-7.0.50 以上版本)  
+支持spring IOC
+
+使用场景
+=========
+viewblock 适用于大页面,单一请求多逻辑处理,页面代码块重复使用,异步页面加载的项目,可以结合MVC架构一起使用,如Spring MVC,struts
+
+使用方式:
+=========
+1. 创建 viewblock  
+
+@ViewblockCollection
+public class ExampleBlock {
+
+	@Viewblock(name = "header", template = "header.jsp")
+	public void header() {
+		
+	}
+	
+	@Viewblock(name = "footer", template = "footer.ftl")
+	public void footer() {
+		
+	}
+
+	@Viewblock(name = "content", template = "content.jsp")
+	public void content(@BRequestParam(required=false) String name,BModelMap bModelMap){
+		bModelMap.addAttribute("name", name);
+	}
+}
+
+2. web.xml 配置  
+<filter>
+	<filter-name>viewblock</filter-name>
+	<filter-class>viewblock.core.ViewblockFilter</filter-class>
+	<async-supported>true</async-supported>
+	
+	<init-param>
+		<param-name>config_properties</param-name>
+		<param-value>			
+		pack_scan=example.*
+		spring=false
+		jsp_template=/WEB-INF/block
+		freemarker=true
+		freemarker_template=/WEB-INF/block
+		freemarker_delay=0
+		freemarker_encode=UTF-8
+		</param-value>
+	</init-param>
+</filter>
+
+3. JSP 标签申明  
+<%@taglib uri="/viewblock" prefix="viewblock"%>  
+
+4. 引入块  
+<viewblock:block name="header"/>  
+<viewblock:block name="content"/>   
+<viewblock:block name="footer"/>  
+
