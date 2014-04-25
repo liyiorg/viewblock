@@ -11,7 +11,7 @@ https://github.com/liyiorg/viewblock-example
 注解编写  
 支持请求参数,类型转换  
 支持JSP,Freemark 块模板  
-支持异步加载块(servlet3.0,web 容器：apache-tomcat-7.0.50 以上版本，jetty 9.1.2 以上版本，其它web容器有待测试)  
+支持异步加载块(servlet3.0,web 容器：apache-tomcat-7.0.50 以上版本，jetty 9.1.2 以上版本，其它web容器有待测试 )  
 支持spring IOC
 
 使用场景
