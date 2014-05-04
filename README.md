@@ -1,26 +1,26 @@
 viewblock
 ---------
 
-viewblock ÊÇÒ»¸öJSP¿é¼ÓÔØ¹¤¾ß,ÓÃÓÚ´¦Àí¸´ÔÓµÄÒµÎñÇëÇóÓëÒ³Ãæ¿é¼ÓÔØ.
+viewblock æ˜¯ä¸€ä¸ªJSPå—åŠ è½½å·¥å…·,ç”¨äºå¤„ç†å¤æ‚çš„ä¸šåŠ¡è¯·æ±‚ä¸é¡µé¢å—åŠ è½½.
 
-Ê¾Àı  
+ç¤ºä¾‹  
 https://github.com/liyiorg/viewblock-example
 
-ÌØµã
+ç‰¹ç‚¹
 ---------
-×¢½â±àĞ´  
-Ö§³ÖÇëÇó²ÎÊı,ÀàĞÍ×ª»»  
-Ö§³ÖJSP,Freemark ¿éÄ£°å  
-Ö§³ÖÒì²½¼ÓÔØ¿é(servlet3.0,web ÈİÆ÷£ºapache-tomcat-7.0.50 ÒÔÉÏ°æ±¾£¬jetty 9.1.2 ÒÔÉÏ°æ±¾£¬ÆäËüwebÈİÆ÷ÓĞ´ı²âÊÔ )  
-Ö§³Öspring IOC
+æ³¨è§£ç¼–å†™  
+æ”¯æŒè¯·æ±‚å‚æ•°,ç±»å‹è½¬æ¢  
+æ”¯æŒJSP,Freemark æ¨¡æ¿  
+æ”¯æŒå¼‚æ­¥åŠ è½½å—(servlet3.0,web å®¹å™¨ï¼štomcat-7.0.50 ï¼Œjetty 9.1.2 ,glassfish4ï¼Œå…¶å®ƒwebå®¹å™¨æœ‰å¾…æµ‹è¯• )  
+æ”¯æŒspring IOC
 
-Ê¹ÓÃ³¡¾°
+ä½¿ç”¨åœºæ™¯
 ---------
-viewblock ÊÊÓÃÓÚ´óÒ³Ãæ,µ¥Ò»ÇëÇó¶àÂß¼­´¦Àí,Ò³Ãæ´úÂë¿éÖØ¸´Ê¹ÓÃ,Òì²½Ò³Ãæ¼ÓÔØµÄÏîÄ¿,¿ÉÒÔ½áºÏMVC¼Ü¹¹Ò»ÆğÊ¹ÓÃ,ÈçSpring MVC,struts
+viewblock é€‚ç”¨äºå¤§é¡µé¢,å•ä¸€è¯·æ±‚å¤šé€»è¾‘å¤„ç†,é¡µé¢ä»£ç å—é‡å¤ä½¿ç”¨,å¼‚æ­¥é¡µé¢åŠ è½½çš„é¡¹ç›®,å¯ä»¥ç»“åˆMVCæ¶æ„ä¸€èµ·ä½¿ç”¨,å¦‚Spring MVC,struts
 
-Ê¹ÓÃ·½Ê½:
+ä½¿ç”¨æ–¹å¼:
 ---------
-1. ´´½¨ viewblock  
+1. åˆ›å»º viewblock  
 
 @ViewblockCollection   
 public class ExampleBlock {
@@ -41,7 +41,7 @@ public class ExampleBlock {
 	}
 }
 
-2. web.xml ÅäÖÃ  
+2. web.xml é…ç½®  
 &lt;filter&gt;   
 	&lt;filter-name&gt;viewblock&lt;/filter-name&gt;   
 	&lt;filter-class&gt;viewblock.core.ViewblockFilter&lt;/filter-class&gt;   
@@ -61,10 +61,10 @@ public class ExampleBlock {
 	&lt;/init-param&gt;    
 &lt;/filter&gt;  
 
-3. JSP ±êÇ©ÉêÃ÷  
+3. JSP æ ‡ç­¾ç”³æ˜  
 &lt;%@taglib uri="/viewblock" prefix="viewblock"%&gt;  
 
-4. ÒıÈë¿é  
+4. å¼•å…¥å—  
 &lt;viewblock:block name="header"/&gt;  
 &lt;viewblock:block name="content"/&gt;   
 &lt;viewblock:block name="footer"/&gt;  
