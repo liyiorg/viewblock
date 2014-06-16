@@ -78,7 +78,6 @@ public class ViewblockFactory {
 				}
 				if(object!=null){
 					inspring = true;
-					break;
 				}else{
 					logger.error("viewblock con't find spring bean {}",c.getName());
 					throw new ViewBlockSpringBeanNotFindException("");
