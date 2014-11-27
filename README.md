@@ -18,10 +18,10 @@ https://github.com/liyiorg/viewblock-example
 ---------
 viewblock 适用于大页面,单一请求多逻辑处理,页面代码块重复使用,异步页面加载的项目,可以结合MVC架构一起使用,如Spring MVC,struts
 
-使用方式:
+#### 使用方式:
 ---------
-1. 创建 viewblock  
-
+##### 1. 创建 viewblock  
+```java
 @ViewblockCollection   
 public class ExampleBlock {
 
@@ -40,16 +40,17 @@ public class ExampleBlock {
 		bModelMap.addAttribute("name", name);
 	}
 }
-
-2. web.xml 配置  
-&lt;filter&gt;   
-	&lt;filter-name&gt;viewblock&lt;/filter-name&gt;   
-	&lt;filter-class&gt;viewblock.core.ViewblockFilter&lt;/filter-class&gt;   
-	&lt;async-supported&gt;true&lt;/async-supported&gt;   
+```
+##### 2. web.xml 配置
+```xml
+<filter&gt;   
+	<filter-name>viewblock</filter-name>   
+	<filter-class>viewblock.core.ViewblockFilter</filter-class>  
+	<async-supported>true</async-supported>   
 	
-	&lt;init-param&gt;   
-		&lt;param-name&gt;config_properties&lt;/param-name&gt;   
-		&lt;param-value&gt;  	  		
+	<init-param>   
+		<param-name>config_properties</param-name>   
+		<param-value>  	  		
 		pack_scan=example.*    
 		spring=false    
 		jsp_template=/WEB-INF/block    
@@ -57,15 +58,18 @@ public class ExampleBlock {
 		freemarker_template=/WEB-INF/block    
 		freemarker_delay=0    
 		freemarker_encode=UTF-8    
-		&lt;/param-value&gt;    
-	&lt;/init-param&gt;    
-&lt;/filter&gt;  
-
-3. JSP 标签申明  
-&lt;%@taglib uri="/viewblock" prefix="viewblock"%&gt;  
-
-4. 引入块  
-&lt;viewblock:block name="header"/&gt;  
-&lt;viewblock:block name="content"/&gt;   
-&lt;viewblock:block name="footer"/&gt;  
+		</param-value>    
+	</init-param>   
+</filter>  
+```
+##### 3. JSP 标签申明
+```jsp
+<%@taglib uri="/viewblock" prefix="viewblock"%>  
+```
+##### 4. 引入块  
+```jsp
+<viewblock:block name="header"/>  
+<viewblock:block name="content"/>   
+<viewblock:block name="footer"/>  
+```
 
