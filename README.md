@@ -43,7 +43,7 @@ public class ExampleBlock {
 ```
 ##### 2. web.xml 配置
 ```xml
-<filter&gt;   
+<filter>   
 	<filter-name>viewblock</filter-name>   
 	<filter-class>viewblock.core.ViewblockFilter</filter-class>  
 	<async-supported>true</async-supported>   
