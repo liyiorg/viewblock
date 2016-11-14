@@ -12,7 +12,7 @@
     <tag>
         <description>View Block JspTag</description>
         <name>block</name>
-        <tag-class>viewblock.jsptag.BlockJspTag</tag-class>
+        <tag-class>com.github.liyiorg.viewblock.jsptag.BlockJspTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>name</name>
@@ -33,7 +33,7 @@
     <tag>
         <description>View Block JspTag2</description>
         <name>output</name>
-        <tag-class>viewblock.jsptag.AsyncOutputJspTag</tag-class>
+        <tag-class>com.github.liyiorg.viewblock.jsptag.AsyncOutputJspTag</tag-class>
         <body-content>empty</body-content>
         <attribute>
             <name>name</name>
@@ -44,7 +44,7 @@
     <tag>
         <description>View Block JspTag3</description>
         <name>asyncFinish</name>
-        <tag-class>viewblock.jsptag.AsyncFinishJspTag</tag-class>
+        <tag-class>com.github.liyiorg.viewblock.jsptag.AsyncFinishJspTag</tag-class>
         <body-content>empty</body-content>
     </tag>
     
