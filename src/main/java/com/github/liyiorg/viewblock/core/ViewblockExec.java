@@ -138,6 +138,7 @@ public class ViewblockExec {
 		ViewblockObject blockObject = ViewblockFactory.getBlock(name);
 		if(blockObject!=null){
 			try {
+				String returnStr = null;
 				BModelAndView mav = blockObject.invoke(request);
 				String tname = mav.getName();
 				ViewResolve viewResolve = null;
@@ -149,8 +150,13 @@ public class ViewblockExec {
 					}else{
 						viewResolve = new JspViewResolve(this.request,this.response,print);
 					}
+				}else if(tname != null){
+					//text content back
+					returnStr = tname;
 				}
-				String returnStr = viewResolve.resolve(mav.getModelMap(),tname);
+				if(viewResolve != null){
+					returnStr = viewResolve.resolve(mav.getModelMap(),tname);
+				}
 				if(returnStr != null && print){
 					response.getWriter().print(returnStr);
 				}
