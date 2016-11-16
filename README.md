@@ -33,7 +33,7 @@ public class ExampleBlock {
 	}
 	
 	@Viewblock(name = "footer")
-	public void footer() {
+	public String footer() {
 		return "footer.ftl";
 	}
 
