@@ -76,7 +76,7 @@ public class ViewblockExec {
 	}
 	
 	/**
-	 * 异步执行
+	 * async exec
 	 * @param name block name
 	 */
 	public void asyncExec(String name){
@@ -85,9 +85,9 @@ public class ViewblockExec {
 	
 
 	/**
-	 * 异步执行
+	 * async exec
 	 * @param name block name
-	 * @param asName 别名
+	 * @param asName sub name
 	 */
 	public void asyncExec(String name,String asName){
 		final String key = name + (asName == null?"":String.format("[%s]",asName));
@@ -130,9 +130,9 @@ public class ViewblockExec {
 	/**
 	 * 
 	 * @param name  block name
-	 * @param async
-	 * @param print
-	 * @return
+	 * @param async async
+	 * @param print print
+	 * @return content
 	 */
 	public String exec(String name,boolean async,boolean print){
 		ViewblockObject blockObject = ViewblockFactory.getBlock(name);

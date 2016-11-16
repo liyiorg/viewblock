@@ -138,8 +138,8 @@ public class ViewblockObject {
 	
 	/**
 	 * 方法执行
-	 * @param servletRequest
-	 * @return
+	 * @param servletRequest servletRequest
+	 * @return BModelAndView
 	 * @throws ViewBlockRequiredParameter 
 	 */
 	public BModelAndView invoke(ServletRequest servletRequest) throws ViewBlockRequiredParameter{

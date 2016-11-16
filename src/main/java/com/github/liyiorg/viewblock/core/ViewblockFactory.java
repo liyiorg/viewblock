@@ -34,18 +34,18 @@ public class ViewblockFactory {
 		
 	
 	/**
-	 * 获取block
-	 * @param name
-	 * @return
+	 * get block
+	 * @param name name
+	 * @return ViewblockObject
 	 */
 	protected static ViewblockObject getBlock(String name){
 		return map.get(name);
 	}
 	
 	/**
-	 * 获取注解 @ViewblockCollection 的类
+	 * get class by @ViewblockCollection
 	 * @param pack
-	 * @return
+	 * @return list
 	 */
 	private static List<Class<?>> scanClasses(String pack){
 		ClassFilter  classFilter = new ClassFilter();
@@ -56,8 +56,8 @@ public class ViewblockFactory {
 	
 	
 	/**
-	 * 过滤块
-	 * @param list
+	 * filter block
+	 * @param pack
 	 * @throws ViewBlockSpringBeanNotFindException 
 	 */
 	protected static void scanBlock(String pack) throws ViewBlockSpringBeanNotFindException{

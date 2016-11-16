@@ -48,10 +48,10 @@ public class ViewblockConfig {
 	}
 	
 	/**
-	 * 转换参数
+	 * Convert field
 	 * @param type
 	 * @param value
-	 * @return
+	 * @return obj
 	 */
 	private static Object convertField(Type type,Object value){
 		if("class java.lang.Boolean".equals(type.toString())){

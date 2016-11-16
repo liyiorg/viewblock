@@ -80,7 +80,7 @@ public class ViewblockFilter implements Filter{
 	/**
 	 * Load config
 	 * @param config
-	 * @return
+	 * @return Properties
 	 */
 	private Properties loadViewblockConfig(FilterConfig config){
 		Properties properties = new Properties();

@@ -16,7 +16,7 @@ public interface ViewResolve {
 	 * 解析模板
 	 * @param model
 	 * @param template
-	 * @return
+	 * @return content
 	 */
 	String resolve(Map<String, Object> model,String template);
 }

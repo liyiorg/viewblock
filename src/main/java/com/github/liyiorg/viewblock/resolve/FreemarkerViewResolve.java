@@ -37,7 +37,8 @@ public class FreemarkerViewResolve implements ViewResolve{
 	 * 初始化
 	 * @param servletContext 初始化模板路径必要参数
 	 * @param dir 模板目录
-	 * @param debug 模板有效时间
+	 * @param templateUpdateDelay templateUpdateDelay
+	 * @param encode encode
 	 */
 	public static void initial(ServletContext servletContext,String dir,int templateUpdateDelay,String encode){
 		String tdir = TEMPLATE_DIR;
@@ -53,10 +54,9 @@ public class FreemarkerViewResolve implements ViewResolve{
 	
 	/**
 	 * 模板解析
-	 * @param model
-	 * @param request
-	 * @param template
-	 * @return
+	 * @param model model
+	 * @param template template
+	 * @return content
 	 */
 	public String resolve(Map<String, Object> model,String template){
 		try {

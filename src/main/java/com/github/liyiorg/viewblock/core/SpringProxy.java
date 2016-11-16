@@ -14,20 +14,18 @@ public class SpringProxy {
 	}
 	
 	/**
-	 * 获取spring bean
-	 * @param <T>
-	 * @param clazz
-	 * @return
+	 * get bean by class
+	 * @param clazz class
+	 * @return bean
 	 */
 	public static <T> T  getBean(Class<T> clazz){
 		return applicationContext.getBean(clazz);
 	}
 	
 	/**
-	 * 获取spring bean
-	 * @param <T>
-	 * @param clazz
-	 * @return
+	 * get bean by name
+	 * @param name name
+	 * @return bean
 	 */
 	public static <T> T  getBean(String name){
 		return (T)applicationContext.getBean(name);
