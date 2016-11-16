@@ -2,10 +2,12 @@ package com.github.liyiorg.viewblock.core;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.UUID;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.github.liyiorg.viewblock.exception.ViewBlockException;
 import com.github.liyiorg.viewblock.exception.ViewBlockRequiredParameter;
@@ -15,10 +17,13 @@ import com.github.liyiorg.viewblock.resolve.ViewResolve;
 
 public class ViewblockExec {
 	
+	private static Logger logger = LoggerFactory.getLogger(ViewblockExec.class);
+	
 	private ServletRequest request;
 	private ServletResponse response;
 	private static final String ASYNC_BLOCK_COMPLETE_FLAG = "ASYNC_BLOCK_COMPLETE_FLAG";
-	private static final String ASYNC_BLOCK_COMPLETE_CONTENT = "ASYNC_BLOCK_COMPLETE_CONTENT";
+	
+	private static boolean tomcat = false;
 	
 	private ViewblockExec(){}
 
@@ -27,128 +32,109 @@ public class ViewblockExec {
 		this.response = response;
 	}
 	
+	static{
+		ClassLoader classLoader = ViewblockExec.class.getClassLoader().getParent();
+		try {
+			Class.forName("org.apache.catalina.connector.RequestFacade", false, classLoader);
+			tomcat = true;
+		} catch (ClassNotFoundException e) {
+			//e.printStackTrace();
+		}
+	}
+	
+	
 	
 	/**
 	 *  Async Validate
 	 */
 	private boolean asyncValidate() {
-		if(!request.isAsyncSupported()){
+		//System.out.println(request.getClass().getName());
+		//jetty org.eclipse.jetty.server.Request
+		//tomcat org.apache.catalina.connector.RequestFacade
+		if(tomcat && !request.isAsyncSupported()){
+			//Set tomcat jsp ASYNC_SUPPORTED
 			request.setAttribute("org.apache.catalina.ASYNC_SUPPORTED", true);
 		}
-		
 		return request.isAsyncSupported();
 	}
-	
-	
-	
-	public Map<String,String> getAsyncContentMap(){
-		Object obj = request.getAsyncContext().getRequest().getAttribute(ASYNC_BLOCK_COMPLETE_CONTENT);
-		if(obj != null){
-			return (Map<String,String>)obj;
-		}
-		return null;
-	}
-	
-	/**
-	 * 获取异步块内容
-	 * @param name
-	 * @return
-	 */
-	public String getAsyncContent(String name){
-		Map<String,String> map = getAsyncContentMap();
-		if(map!=null){
-			return map.get(name);
-		}
-		return null;
-	}
 
-	
-	public void addAsyncContent(String blockName,String asName,String content){
-		Map<String, String> map = getAsyncContentMap();
-		if(map == null){
-			map = new HashMap<String, String>();
-			request.getAsyncContext().getRequest().setAttribute(ASYNC_BLOCK_COMPLETE_CONTENT,map);
-		}
-		map.put(blockName+(asName==null?"":"["+asName+"]"), content);
-	}
-	
-	private void removeAsyncContent(Map<String, String> map,String key){
-		map.remove(key);
-	}
-	
-	
-	private Map<String,Boolean> getAsyncFlagMap(){
-		Object obj = request.getAsyncContext().getRequest().getAttribute(ASYNC_BLOCK_COMPLETE_FLAG);
+	public Map<String,AsyncCompleteFlag> getAsyncCompleteFlag(){
+		Object obj = request.getAttribute(ASYNC_BLOCK_COMPLETE_FLAG);
 		if(obj != null){
-			return (Map<String,Boolean>)obj;
+			return (Map<String,AsyncCompleteFlag>)obj;
 		}
 		return null;
 	}
 	
-	private void addAsyncFlag(String key){
-		Map<String, Boolean> map = getAsyncFlagMap();
+	public void addAsyncCompleteFlag(String key){
+		Map<String, AsyncCompleteFlag> map = getAsyncCompleteFlag();
 		if(map == null){
-			map = new HashMap<String, Boolean>();
-			request.getAsyncContext().getRequest().setAttribute(ASYNC_BLOCK_COMPLETE_FLAG,map);
+			map = new HashMap<String, AsyncCompleteFlag>();
+			request.setAttribute(ASYNC_BLOCK_COMPLETE_FLAG,map);
 		}
-		map.put(key, false);
+		map.put(key, new AsyncCompleteFlag());
 	}
 	
-	private void removeAsyncFlag(String key){
-		Map<String,Boolean> map = getAsyncFlagMap();
-		map.put(key, true);
-	}
-
 	/**
 	 * 异步执行
 	 * @param name block name
 	 */
 	public void asyncExec(String name){
-		asyncExec(name,null);
+		asyncExec(name, null);
 	}
 	
+
 	/**
 	 * 异步执行
-	 * @param name   block name
-	 * @param asName index name
+	 * @param name block name
+	 * @param asName 别名
 	 */
 	public void asyncExec(String name,String asName){
-		if(asyncValidate()){
+		final String key = name + (asName == null?"":String.format("[%s]",asName));
+		addAsyncCompleteFlag(key);
+		if(asyncValidate() || request.isAsyncStarted()){	
 			if(!request.isAsyncStarted()){
 				request.startAsync();
 			}
-			request.getAsyncContext().setTimeout(request.getAsyncContext().getTimeout()+1000);
-			final String key = UUID.randomUUID().toString();
-			addAsyncFlag(key);
 			final String tname = name;
-			final String tasName = asName;
+			
 			request.getAsyncContext().start(new Runnable() {
 				public void run() {
-					String text = exec(tname,tasName,true,false);
-					removeAsyncFlag(key);
-					addAsyncContent(tname,tasName,text);
+					String content = exec(tname,true,false);
+					AsyncCompleteFlag acf = getAsyncCompleteFlag().get(key);
+					synchronized(acf){
+						acf.setContent(content);
+						acf.setComplete(true);
+						acf.notifyAll();
+					}
 				}
 			});
+		}else{
+			logger.warn("Con't AsyncSupported!");
+			String content = exec(name,false,false);
+			AsyncCompleteFlag acf = getAsyncCompleteFlag().get(key);
+			acf.setContent(content);
+			acf.setComplete(true);
 		}
 	}
 	
+	
 	public String content(String name){
-		return exec(name,null,false,false);
+		return exec(name,false,false);
 	}
 	
 	public void print(String name){
-		exec(name,null,false,true);
+		exec(name,false,true);
 	}
 	
 	/**
 	 * 
 	 * @param name  block name
-	 * @param asName 别名
 	 * @param async
 	 * @param print
 	 * @return
 	 */
-	private String exec(String name,String asName,boolean async,boolean print){
+	public String exec(String name,boolean async,boolean print){
 		ViewblockObject blockObject = ViewblockFactory.getBlock(name);
 		if(blockObject!=null){
 			try {

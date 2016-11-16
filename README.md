@@ -45,7 +45,7 @@ public class ExampleBlock {
 ```xml
 <filter>   
 	<filter-name>viewblock</filter-name>   
-	<filter-class>viewblock.core.ViewblockFilter</filter-class>  
+	<filter-class>com.github.liyiorg.viewblock.core.ViewblockFilter</filter-class>  
 	<async-supported>true</async-supported>   
 	
 	<init-param>   
@@ -62,14 +62,27 @@ public class ExampleBlock {
 	</init-param>   
 </filter>  
 ```
-##### 3. JSP 标签申明
+##### 3. JSP 加载
+###### 同步加载
+
 ```jsp
 <%@taglib uri="/viewblock" prefix="viewblock"%>  
-```
-##### 4. 引入块  
-```jsp
+
 <viewblock:block name="header"/>  
 <viewblock:block name="content"/>   
 <viewblock:block name="footer"/>  
 ```
 
+###### 异步加载
+
+```jsp
+<%@taglib uri="/viewblock" prefix="viewblock"%>  
+<viewblock:block name="content" async="true"/>
+
+
+<viewblock:block name="header"/>  
+<viewblock:output name="content"/>  
+<viewblock:block name="footer"/>  
+<!-- 释放链接 -->
+<viewblock:asyncFinish/>
+```

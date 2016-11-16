@@ -6,11 +6,16 @@ import java.util.Map;
 import javax.servlet.jsp.JspException;
 import javax.servlet.jsp.tagext.TagSupport;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.github.liyiorg.viewblock.core.AsyncCompleteFlag;
 import com.github.liyiorg.viewblock.core.ViewblockExec;
 
 
 public class AsyncOutputJspTag extends TagSupport{
 	
+	private static Logger logger = LoggerFactory.getLogger(AsyncOutputJspTag.class);
 	
 	/**
 	 * 
@@ -29,35 +34,37 @@ public class AsyncOutputJspTag extends TagSupport{
 			e.printStackTrace();
 		}
 		viewblockExec = new ViewblockExec(pageContext.getRequest(),pageContext.getResponse());
-		TimeoutAsyncListener timeoutAsyncListener = new TimeoutAsyncListener();
-		pageContext.getRequest().getAsyncContext().addListener(timeoutAsyncListener);
-		while(!timeoutAsyncListener.isTimeout()){
-			Map<String, String> map = viewblockExec.getAsyncContentMap();
-			if(map!=null){
-				String content = map.get(name);
-				if(content!=null){
+		Map<String,AsyncCompleteFlag> map = viewblockExec.getAsyncCompleteFlag();
+		if(map != null){
+			AsyncCompleteFlag acf = map.get(name);
+			if(pageContext.getRequest().isAsyncSupported() || pageContext.getRequest().isAsyncStarted()){
+				synchronized (acf){
+					//wait complete
 					try {
-						pageContext.getOut().print(content);
-						break;
-					} catch (IOException e) {
-						
-						e.printStackTrace();
-					}
-				}else{
-					try {
-						Thread.sleep(100);
+						if(!acf.isComplete()){
+							acf.wait();
+						}
+						pageContext.getOut().print(acf.getContent());
+						pageContext.getOut().flush();
+						acf.setOutputed(true);
 					} catch (InterruptedException e) {
-						
+						e.printStackTrace();
+					} catch (IOException e) {
 						e.printStackTrace();
 					}
 				}
+			}else{
+				logger.warn("Con't AsyncSupported!");
+				try {
+					pageContext.getOut().print(acf.getContent());
+					pageContext.getOut().flush();
+					acf.setOutputed(true);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
 		}
-		try {
-			pageContext.getOut().flush();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+	
 		return SKIP_BODY;
 	}
 

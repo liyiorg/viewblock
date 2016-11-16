@@ -76,7 +76,7 @@ public class ViewblockObject {
 				methodParams[i] = new MethodParam(parameterNames[i],null,new HttpServletRequestConvert());
 			}else if(ptype.getName().equals("javax.servlet.http.HttpSession")){
 				methodParams[i] = new MethodParam(parameterNames[i],null,new HttpSessionConvert());
-			}else if(ptype.getName().equals("viewblock.core.BModelMap")){
+			}else if(ptype.getName().equals("com.github.liyiorg.viewblock.core.BModelMap")){
 				if(modelMapParamIndex != null){
 					logger.error("view block only set one BModelMap");
 				}
@@ -85,7 +85,7 @@ public class ViewblockObject {
 			}else{
 				BRequestParam p = null;
 				for(Annotation a : pas[i]){
-					if(a.annotationType().getName().equals("viewblock.annotation.BRequestParam")){
+					if(a.annotationType().getName().equals("com.github.liyiorg.viewblock.annotation.BRequestParam")){
 						p = (BRequestParam)a;
 						break;
 					}
