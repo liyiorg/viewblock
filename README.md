@@ -10,11 +10,11 @@ https://github.com/liyiorg/viewblock-example
 
 #### 特点
 ---------
-注解编写  
-支持请求参数,类型转换  
-支持JSP,Freemark 模板  
-支持spring IOC
-支持异步加载块(servlet3.0,web 容器：tomcat-7.0.50 ，jetty 9.1.2 ,glassfish4，其它web容器有待测试 )，异步加载无html占位JS嵌入（不会破坏页面的完整性，有利于搜索引擎抓取。），异步加载与同步加载可同时使用。  
+* 注解编写  
+* 支持请求参数,类型转换  
+* 支持JSP,Freemark 模板  
+* 支持spring IOC
+* 支持异步加载块(servlet3.0,web 容器：tomcat-7.0.50 ，jetty 9.1.2 ,glassfish4，其它web容器有待测试 )，异步加载无html占位JS嵌入（不会破坏页面的完整性，有利于搜索引擎抓取。），异步加载与同步加载可同时使用。  
 
 #### 使用场景
 ---------
