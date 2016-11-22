@@ -3,6 +3,7 @@ package com.github.liyiorg.viewblock.core;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import javax.servlet.ServletRequest;
 import javax.servlet.ServletResponse;
@@ -22,7 +23,7 @@ public class ViewblockExec {
 
 	private ServletRequest request;
 	private ServletResponse response;
-	private static final String ASYNC_BLOCK_COMPLETE_FLAG = "ASYNC_BLOCK_COMPLETE_FLAG";
+	public static final String ASYNC_BLOCK_COMPLETE_FLAG = "ASYNC_BLOCK_COMPLETE_FLAG_" + UUID.randomUUID().toString();
 
 	private static boolean tomcat = false;
 
