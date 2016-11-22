@@ -23,14 +23,17 @@ Viewblock is applicable to large pages, a single request multi page block logic 
 #### Full use example:
 ---------
 ##### 1. maven
+
 ```xml
 <dependency>
   <groupId>com.github.liyiorg</groupId>
   <artifactId>viewblock</artifactId>
   <version>1.0.0-SNAPSHOT</version>
 </dependency>
+```
 
 ##### 2. web.xml
+
 ```xml
 <filter>   
 	<filter-name>viewblock</filter-name>   
@@ -48,7 +51,9 @@ Viewblock is applicable to large pages, a single request multi page block logic 
 		</param-value>    
 	</init-param>   
 </filter>
+```
 
+```xml
 <!-- jetty config -->
 <servlet id="jsp">
 	<servlet-name>jsp</servlet-name>
@@ -88,7 +93,9 @@ Viewblock is applicable to large pages, a single request multi page block logic 
 	<url-pattern>*.XSP</url-pattern>
 </servlet-mapping>  
 ```
+
 ##### 3. create viewblock  
+
 ```java
 @ViewblockCollection
 public class ExampleBlock {
