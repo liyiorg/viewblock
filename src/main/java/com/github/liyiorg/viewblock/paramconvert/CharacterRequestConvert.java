@@ -4,13 +4,13 @@ import javax.servlet.ServletRequest;
 
 import com.github.liyiorg.viewblock.exception.ViewBlockRequiredParameter;
 
-public class LongRequestConvert extends Convert {
+public class CharacterRequestConvert extends Convert {
 
-	public LongRequestConvert() {
+	public CharacterRequestConvert() {
 		super();
 	}
 
-	public LongRequestConvert(Object nullvalue) {
+	public CharacterRequestConvert(Object nullvalue) {
 		super(nullvalue);
 	}
 
@@ -24,9 +24,9 @@ public class LongRequestConvert extends Convert {
 			}
 			try {
 				if (!isEmpty(object)) {
-					return Long.valueOf(object);
+					return object.charAt(0);
 				} else if (!isEmptyDef(def)) {
-					return Long.valueOf(def);
+					return def.charAt(0);
 				}
 			} catch (NumberFormatException e) {
 				throw new ViewBlockRequiredParameter(e.getMessage());
@@ -41,13 +41,14 @@ public class LongRequestConvert extends Convert {
 		if (required && (isEmpty(tagValue) || isEmptyDef(def))) {
 			throw new ViewBlockRequiredParameter("Required long parameter '" + param + "' is not present");
 		}
-		if (!isEmpty(tagValue) && (tagValue instanceof String || tagValue instanceof Integer)) {
-			return Long.valueOf(tagValue.toString());
+		if (!isEmpty(tagValue) && tagValue instanceof String) {
+			return tagValue.toString().charAt(0);
 		} else if (!isEmpty(tagValue)) {
 			return tagValue;
 		} else if (!isEmptyDef(def)) {
-			return Long.valueOf(def);
+			return def.charAt(0);
 		}
 		return nullvalue;
 	}
+
 }

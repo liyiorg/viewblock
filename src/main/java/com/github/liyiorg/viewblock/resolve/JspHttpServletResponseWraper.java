@@ -8,13 +8,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpServletResponseWrapper;
 
 public class JspHttpServletResponseWraper extends HttpServletResponseWrapper {
-	private MyPrintWriter tmpWriter;
+	private JspPrintWriter tmpWriter;
 	private ByteArrayOutputStream output;
 
 	public JspHttpServletResponseWraper(HttpServletResponse httpServletResponse) {
 		super(httpServletResponse);
 		output = new ByteArrayOutputStream();
-		tmpWriter = new MyPrintWriter(output);
+		tmpWriter = new JspPrintWriter(output);
 	}
 
 	public void finalize() throws Throwable {
@@ -24,7 +24,8 @@ public class JspHttpServletResponseWraper extends HttpServletResponseWrapper {
 	}
 
 	public String getContent() {
-		tmpWriter.flush(); // 刷新该流的缓冲，详看java.io.Writer.flush()
+		// 刷新该流的缓冲，详看java.io.Writer.flush()
+		tmpWriter.flush();
 		return tmpWriter.getByteArrayOutputStream().toString();
 	}
 
@@ -39,10 +40,10 @@ public class JspHttpServletResponseWraper extends HttpServletResponseWrapper {
 
 	// 自定义PrintWriter，为的是把response流写到自己指定的输入流当中
 	// 而非默认的ServletOutputStream
-	private class MyPrintWriter extends PrintWriter {
+	private class JspPrintWriter extends PrintWriter {
 		ByteArrayOutputStream myOutput; // 此即为存放response输入流的对象
 
-		public MyPrintWriter(ByteArrayOutputStream output) {
+		public JspPrintWriter(ByteArrayOutputStream output) {
 			super(output);
 			myOutput = output;
 		}

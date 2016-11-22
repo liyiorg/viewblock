@@ -12,18 +12,17 @@ import org.slf4j.LoggerFactory;
 import com.github.liyiorg.viewblock.core.AsyncCompleteFlag;
 import com.github.liyiorg.viewblock.core.ViewblockExec;
 
+public class AsyncOutputJspTag extends TagSupport {
 
-public class AsyncOutputJspTag extends TagSupport{
-	
 	private static Logger logger = LoggerFactory.getLogger(AsyncOutputJspTag.class);
-	
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = -3335640132046803017L;
-	
+
 	private ViewblockExec viewblockExec;
-	
+
 	private String name;
 
 	@Override
@@ -33,15 +32,17 @@ public class AsyncOutputJspTag extends TagSupport{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		viewblockExec = new ViewblockExec(pageContext.getRequest(),pageContext.getResponse());
-		Map<String,AsyncCompleteFlag> map = viewblockExec.getAsyncCompleteFlag();
-		if(map != null){
+		viewblockExec = new ViewblockExec(pageContext.getRequest(), pageContext.getResponse());
+		Map<String, AsyncCompleteFlag> map = viewblockExec.getAsyncCompleteFlag();
+		if (map != null) {
 			AsyncCompleteFlag acf = map.get(name);
-			if(pageContext.getRequest().isAsyncSupported() || pageContext.getRequest().isAsyncStarted()){
-				synchronized (acf){
-					//wait complete
+			if (acf == null) {
+				logger.error("VIEWBLOCK[{}] not ready in jsp page.", name);
+			} else if (pageContext.getRequest().isAsyncSupported() || pageContext.getRequest().isAsyncStarted()) {
+				synchronized (acf) {
+					// wait complete
 					try {
-						if(!acf.isComplete()){
+						if (!acf.isComplete()) {
 							acf.wait();
 						}
 						pageContext.getOut().print(acf.getContent());
@@ -53,7 +54,7 @@ public class AsyncOutputJspTag extends TagSupport{
 						e.printStackTrace();
 					}
 				}
-			}else{
+			} else {
 				logger.warn("Con't AsyncSupported!");
 				try {
 					pageContext.getOut().print(acf.getContent());
@@ -63,8 +64,10 @@ public class AsyncOutputJspTag extends TagSupport{
 					e.printStackTrace();
 				}
 			}
+		} else {
+			logger.error("VIEWBLOCK[{}] not ready in jsp page.", name);
 		}
-	
+
 		return SKIP_BODY;
 	}
 
@@ -72,8 +75,4 @@ public class AsyncOutputJspTag extends TagSupport{
 		this.name = name;
 	}
 
-
-
-
-	
 }

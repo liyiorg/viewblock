@@ -23,82 +23,80 @@ import com.github.liyiorg.viewblock.exception.ViewBlockSpringBeanNotFindExceptio
 import com.github.liyiorg.viewblock.resolve.FreemarkerViewResolve;
 import com.github.liyiorg.viewblock.resolve.JspViewResolve;
 
-public class ViewblockFilter implements Filter{
+public class ViewblockFilter implements Filter {
 
 	private static final Logger logger = LoggerFactory.getLogger(ViewblockFilter.class);
-	
-	private static final String DEFAULT_CONFIG_FILE = "viewblock_default.properties";	//默认配置
-	
-	private static final String CONFIG_FILE = "viewblock.properties";	//配置属性文件
-	
-	public void destroy() {
-		// TODO Auto-generated method stub
-	}
-	
 
-	public void doFilter(ServletRequest request, ServletResponse response,
-			FilterChain filterChain) throws IOException, ServletException {
+	private static final String DEFAULT_CONFIG_FILE = "viewblock_default.properties"; // 默认配置
+
+	private static final String CONFIG_FILE = "viewblock.properties"; // 配置属性文件
+
+	public void destroy() {
+	}
+
+	public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
+			throws IOException, ServletException {
 		filterChain.doFilter(request, response);
 	}
 
 	public void init(FilterConfig config) throws ServletException {
-		//Load base config
+		// Load base config
 		Properties properties = loadViewblockConfig(config);
 		ViewblockConfig.margerProperties(properties);
-		
-		
-		if(ViewblockConfig.jsp_template!=null){
+
+		if (ViewblockConfig.jsp_template != null) {
 			JspViewResolve.initial(ViewblockConfig.jsp_template);
 		}
 
-		if(ViewblockConfig.freemarker){
-			
-			FreemarkerViewResolve.initial(
-					config.getServletContext(),
-					ViewblockConfig.freemarker_template,
-					ViewblockConfig.freemarker_delay,
-					ViewblockConfig.freemarker_encode);
+		if (ViewblockConfig.freemarker) {
+
+			FreemarkerViewResolve.initial(config.getServletContext(), ViewblockConfig.freemarker_template,
+					ViewblockConfig.freemarker_delay, ViewblockConfig.freemarker_encode);
 		}
-		
-		if(ViewblockConfig.spring){
+
+		if (ViewblockConfig.spring) {
 			ViewblockFactory.setUseSpring(true);
 			SpringProxy.initial(config.getServletContext());
 		}
-		
-		if(ViewblockConfig.pack_scan != null){
+
+		if (ViewblockConfig.pack_scan != null) {
 			try {
 				ViewblockFactory.scanBlock(ViewblockConfig.pack_scan);
 			} catch (ViewBlockSpringBeanNotFindException e) {
-				
+
 				e.printStackTrace();
 			}
-		}else{
+		} else {
 			logger.error("not set block view pack");
 		}
 	}
-	
+
 	/**
 	 * Load config
+	 * 
 	 * @param config
 	 * @return Properties
 	 */
-	private Properties loadViewblockConfig(FilterConfig config){
+	private Properties loadViewblockConfig(FilterConfig config) {
 		Properties properties = new Properties();
 		try {
-			InputStream baseConfigInputStream = this.getClass().getClassLoader().getResourceAsStream(DEFAULT_CONFIG_FILE);
+			InputStream baseConfigInputStream = this.getClass().getClassLoader()
+					.getResourceAsStream(DEFAULT_CONFIG_FILE);
 			properties.load(baseConfigInputStream);
 			baseConfigInputStream.close();
 			String config_properties = config.getInitParameter("config_properties");
-			if(config_properties!=null){
-				logger.debug("Load viewblock config_properties:{}",config_properties);
+			if (config_properties != null) {
+				logger.debug("Load viewblock config_properties:{}", config_properties);
 				Reader reader = new StringReader(config_properties);
 				properties.load(reader);
 				reader.close();
-			}else {
-				String propsfilePath = new File(Thread.currentThread().getContextClassLoader().getResource("/").getFile()).getParent()+"/"+CONFIG_FILE;
+			} else {
+				String propsfilePath = new File(
+						Thread.currentThread().getContextClassLoader().getResource("/").getFile()).getParent() + "/"
+						+ CONFIG_FILE;
 				File file = new File(propsfilePath);
-				if(file.exists()){
-					logger.info("Load viewblock.properties on location:{}",propsfilePath);
+				if (file.exists()) {
+					logger.info("Load viewblock.properties on location:{}", propsfilePath);
 					InputStream inputStream = new FileInputStream(file);
 					properties.load(this.getClass().getClassLoader().getResourceAsStream(CONFIG_FILE));
 					inputStream.close();
@@ -107,11 +105,10 @@ public class ViewblockFilter implements Filter{
 		} catch (FileNotFoundException e1) {
 			e1.printStackTrace();
 		} catch (IOException e1) {
-			
+
 			e1.printStackTrace();
 		}
 		return properties;
 	}
-	
 
 }

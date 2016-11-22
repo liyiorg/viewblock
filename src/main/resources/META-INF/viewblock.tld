@@ -13,7 +13,7 @@
         <description>BlockJspTag</description>
         <name>block</name>
         <tag-class>com.github.liyiorg.viewblock.jsptag.BlockJspTag</tag-class>
-        <body-content>empty</body-content>
+        <body-content>scriptless</body-content>
         <attribute>
             <name>name</name>
             <required>true</required>
@@ -22,12 +22,35 @@
         <attribute>
             <name>async</name>
             <required>false</required>
-            <rtexprvalue>false</rtexprvalue>
+            <rtexprvalue>true</rtexprvalue>
         </attribute>
          <attribute>
             <name>asName</name>
             <required>false</required>
+            <rtexprvalue>true</rtexprvalue>
+        </attribute>
+    </tag>
+    <tag>
+        <description>ParamJspTag</description>
+        <name>param</name>
+        <tag-class>com.github.liyiorg.viewblock.jsptag.ParamJspTag</tag-class>
+        <body-content>empty</body-content>
+        <attribute>
+            <name>index</name>
+            <type>java.lang.Integer</type>
+            <required>false</required>
             <rtexprvalue>false</rtexprvalue>
+        </attribute>
+        <attribute>
+            <name>name</name>
+            <required>false</required>
+            <rtexprvalue>false</rtexprvalue>
+        </attribute>
+         <attribute>
+            <name>value</name>
+            <type>java.lang.Object</type>
+            <required>true</required>
+            <rtexprvalue>true</rtexprvalue>
         </attribute>
     </tag>
     <tag>

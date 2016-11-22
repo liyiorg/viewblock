@@ -11,5 +11,11 @@ public class BModelMapConvert extends Convert{
 	public Object convert(ServletRequest request, String parma,String def,boolean required)throws ViewBlockRequiredParameter{
 		return new BModelMap();
 	}
+
+	@Override
+	public Object convert(String param, Object tagValue, String def, boolean required)
+			throws ViewBlockRequiredParameter {
+		return null;
+	}
 	
 }

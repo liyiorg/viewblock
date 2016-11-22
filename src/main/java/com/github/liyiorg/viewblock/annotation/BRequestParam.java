@@ -13,8 +13,7 @@ public @interface BRequestParam {
 
 	String value() default "";
 	
-	String defaultValue() default "";
-	
 	boolean required() default true;
 
+	String defaultValue() default ValueConstants.DEFAULT_NONE;
 }

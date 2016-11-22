@@ -1,9 +1,9 @@
 package com.github.liyiorg.viewblock.core;
 
 public class BModelAndView {
-	
+
 	private String name;
-	
+
 	private BModelMap modelMap;
 
 	public String getName() {
@@ -21,6 +21,5 @@ public class BModelAndView {
 	public void setModelMap(BModelMap modelMap) {
 		this.modelMap = modelMap;
 	}
-	
-	
+
 }
