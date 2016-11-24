@@ -136,7 +136,7 @@ public class ExampleBlock {
 ###### sync load
 
 ```jsp
-<%@taglib uri="/viewblock" prefix="viewblock"%>  
+<%@taglib uri="https://github.com/liyiorg/viewblock" prefix="viewblock"%>  
 
 <viewblock:block name="header"/>  
 <div>other html...</div>   
@@ -148,6 +148,7 @@ public class ExampleBlock {
 
 ```jsp
 <%@taglib uri="https://github.com/liyiorg/viewblock" prefix="viewblock"%>
+
 <!-- Load asynchronous execution in order to load the page faster, and reduce the wait for the asynchronous output tag, the asynchronous execution block should be placed at the top of the JSP page.-->  
 <viewblock:block name="content" async="true"/>
 
@@ -159,4 +160,18 @@ public class ExampleBlock {
 <viewblock:block name="footer"/>  
 <!-- Release asynchronous link -->
 <viewblock:asyncFinish/>
+```
+
+
+###### jsp tag params
+
+```jsp
+<%@taglib uri="https://github.com/liyiorg/viewblock" prefix="viewblock"%>
+
+<viewblock:block name="header"/>
+<viewblock:block name="content">
+	<viewblock:param name="name" value="SLYH"/>
+	<viewblock:param name="h" value="123"/>
+</viewblock:block>
+<viewblock:block name="footer"/>
 ```
