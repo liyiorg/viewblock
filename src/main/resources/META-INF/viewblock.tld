@@ -6,8 +6,9 @@
     <description>Viewblock JSP Tag handlers.</description>
     <tlib-version>1.0</tlib-version>
     <short-name>viewblock</short-name>
-    <uri>/viewblock</uri>
-
+    <uri>https://github.com/liyiorg/viewblock</uri>
+    
+    
     
     <tag>
         <description>BlockJspTag</description>

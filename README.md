@@ -147,7 +147,7 @@ public class ExampleBlock {
 ###### async load
 
 ```jsp
-<%@taglib uri="/viewblock" prefix="viewblock"%>
+<%@taglib uri="https://github.com/liyiorg/viewblock" prefix="viewblock"%>
 <!-- Load asynchronous execution in order to load the page faster, and reduce the wait for the asynchronous output tag, the asynchronous execution block should be placed at the top of the JSP page.-->  
 <viewblock:block name="content" async="true"/>
 
