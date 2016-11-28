@@ -154,17 +154,17 @@ public class ViewblockExec {
 		if (blockObject != null) {
 			try {
 				String returnStr = null;
-				BModelAndView mav = blockObject.invoke(request, params);
+				BModelAndView mav = blockObject.invoke(request, response, params);
 				String tname = mav.getName();
 				ViewResolve viewResolve = null;
 				if (tname != null && tname.endsWith(".ftl")) {
 					viewResolve = new FreemarkerViewResolve();
 				} else if (tname != null && tname.endsWith(".jsp")) {
 					if (async) {
-						viewResolve = new JspViewResolve(this.request.getAsyncContext().getRequest(),
-								this.request.getAsyncContext().getResponse(), false);
+						viewResolve = new JspViewResolve(request.getAsyncContext().getRequest(),
+								request.getAsyncContext().getResponse(), false);
 					} else {
-						viewResolve = new JspViewResolve(this.request, this.response, print);
+						viewResolve = new JspViewResolve(request, response, print);
 					}
 				} else if (tname != null) {
 					// text content back

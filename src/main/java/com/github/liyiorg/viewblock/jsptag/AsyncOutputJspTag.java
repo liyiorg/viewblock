@@ -43,10 +43,10 @@ public class AsyncOutputJspTag extends TagSupport {
 					// wait complete
 					try {
 						if (!acf.isComplete()) {
+							pageContext.getOut().flush();
 							acf.wait();
 						}
 						pageContext.getOut().print(acf.getContent());
-						pageContext.getOut().flush();
 						acf.setOutputed(true);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
@@ -58,7 +58,6 @@ public class AsyncOutputJspTag extends TagSupport {
 				logger.warn("Con't AsyncSupported!");
 				try {
 					pageContext.getOut().print(acf.getContent());
-					pageContext.getOut().flush();
 					acf.setOutputed(true);
 				} catch (IOException e) {
 					e.printStackTrace();

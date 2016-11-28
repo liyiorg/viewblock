@@ -41,7 +41,6 @@ public class BlockJspTag extends TagSupport {
 			try {
 				pageContext.getOut().flush();
 			} catch (IOException e) {
-
 				e.printStackTrace();
 			}
 			exec.print(name, params);
