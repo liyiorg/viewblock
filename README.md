@@ -97,7 +97,7 @@ public class ExampleBlock {
 }
 ```
 
-##### 3. JSP
+##### 4. JSP page
 
 ###### sync load
 
