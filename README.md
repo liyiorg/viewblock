@@ -51,48 +51,14 @@ Viewblock is applicable to large pages, a single request multi page block logic 
 		</param-value>    
 	</init-param>   
 </filter>
-```
 
-```xml
-<!-- jetty config -->
 <servlet id="jsp">
 	<servlet-name>jsp</servlet-name>
-	<servlet-class>org.eclipse.jetty.jsp.JettyJspServlet</servlet-class>
 	<async-supported>true</async-supported>
-	<init-param>
-		<param-name>logVerbosityLevel</param-name>
-		<param-value>DEBUG</param-value>
-	</init-param>
-	<init-param>
-		<param-name>fork</param-name>
-		<param-value>false</param-value>
-	</init-param>
-	<init-param>
-		<param-name>xpoweredBy</param-name>
-		<param-value>false</param-value>
-	</init-param>
-	<init-param>
-		<param-name>compilerTargetVM</param-name>
-		<param-value>1.7</param-value>
-	</init-param>
-	<init-param>
-		<param-name>compilerSourceVM</param-name>
-		<param-value>1.7</param-value>
-	</init-param>
-	<load-on-startup>0</load-on-startup>
 </servlet>
-<servlet-mapping>
-	<servlet-name>jsp</servlet-name>
-	<url-pattern>*.jsp</url-pattern>
-	<url-pattern>*.jspf</url-pattern>
-	<url-pattern>*.jspx</url-pattern>
-	<url-pattern>*.xsp</url-pattern>
-	<url-pattern>*.JSP</url-pattern>
-	<url-pattern>*.JSPF</url-pattern>
-	<url-pattern>*.JSPX</url-pattern>
-	<url-pattern>*.XSP</url-pattern>
-</servlet-mapping>  
 ```
+
+
 
 ##### 3. create viewblock  
 

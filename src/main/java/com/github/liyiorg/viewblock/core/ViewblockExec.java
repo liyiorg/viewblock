@@ -25,38 +25,9 @@ public class ViewblockExec {
 	private ServletResponse response;
 	public static final String ASYNC_BLOCK_COMPLETE_FLAG = "ASYNC_BLOCK_COMPLETE_FLAG_" + UUID.randomUUID().toString();
 
-	private static boolean tomcat = false;
-
-	private ViewblockExec() {
-	}
-
 	public ViewblockExec(ServletRequest request, ServletResponse response) {
 		this.request = request;
 		this.response = response;
-	}
-
-	static {
-		ClassLoader classLoader = ViewblockExec.class.getClassLoader().getParent();
-		try {
-			Class.forName("org.apache.catalina.connector.RequestFacade", false, classLoader);
-			tomcat = true;
-		} catch (ClassNotFoundException e) {
-			// e.printStackTrace();
-		}
-	}
-
-	/**
-	 * Async Validate
-	 */
-	private boolean asyncValidate() {
-		// System.out.println(request.getClass().getName());
-		// jetty org.eclipse.jetty.server.Request
-		// tomcat org.apache.catalina.connector.RequestFacade
-		if (tomcat && !request.isAsyncSupported()) {
-			// Set tomcat jsp ASYNC_SUPPORTED
-			request.setAttribute("org.apache.catalina.ASYNC_SUPPORTED", true);
-		}
-		return request.isAsyncSupported();
 	}
 
 	public Map<String, AsyncCompleteFlag> getAsyncCompleteFlag() {
@@ -105,7 +76,7 @@ public class ViewblockExec {
 	public void asyncExec(String name, String asName, final List<BlockParam> params) {
 		final String key = name + (asName == null ? "" : String.format("[%s]", asName));
 		addAsyncCompleteFlag(key);
-		if (asyncValidate() || request.isAsyncStarted()) {
+		if (request.isAsyncSupported() || request.isAsyncStarted()) {
 			if (!request.isAsyncStarted()) {
 				request.startAsync();
 			}
